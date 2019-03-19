@@ -21,3 +21,7 @@ urlpatterns = [
     path('', include('drf_app1.urls')),
     path('admin/', admin.site.urls),
 ]
+
+urlpatterns += [
+    path('api-auth/', include('rest_framework.urls')),
+]
