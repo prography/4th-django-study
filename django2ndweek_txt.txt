@@ -1,0 +1,11 @@
+'snippets' is a reverse relationship on the User model,
+이게 무슨 뜻일까? 'snippets'는 사용자 모델과 반대 방향? 
+
+The other field will be used to store the highlighted HTML representation of the code.
+하이라이트된 코드를 HTML 형태로 저장하는 이유가 뭘까
+
+
+내용)
+source 인자로는 특정 필드를 지정할 수 있습니다. 여기에는 직렬화된 인스턴스의 속성 뿐만 아니라 위의 코드에서처럼 마침표 표기 방식을 통해 특정 속성을 탐색할 수도 있습니다. 마치 Django의 템플릿 언어와 비슷하죠.
+
+이 필드는 CharField나 BooleanField와는 달리 타입이 없는 ReadOnlyField 클래스로 지정했습니다. 타입이 없는 ReadOnlyField는 직렬화에 사용되었을 땐 언제나 읽기 전용이므로, 모델의 인스턴스를 업데이트할 때는 사용할 수 없습니다. 
