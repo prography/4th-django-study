@@ -42,7 +42,9 @@ url 파라미터 —> *args, **kwargs 로 받음
 
 
 # 알게된 것.
-1. 함수이름 get post… 등은 제공되는 함수이므로 이름 바꾸면 안됨.<br>바꾸려면 @action[detail=“True”, method=POST] 이런 데코레이터 써줘야함.
+1. 함수이름 get post… 등은 제공되는 함수이므로 이름 바꾸면 안됨.
+
+   바꾸려면 @action[detail=“True”, method=POST] 이런 데코레이터 써줘야함.
 - detail 트루면 url파라미터 받겠다. 아니면 안받겠다. 
 - 메소드 액션 정해줌. 
 —> 이러면 함수이름 다른걸로 쓸수있음.
