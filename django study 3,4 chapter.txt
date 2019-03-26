@@ -1,0 +1,67 @@
+주은)
+class Snippet에 owner 를 보면 foreignkey에 related _ key 로 snippets 를 사용 . 이런 직렬화 인스턴스 사용도 가능한다는 뜻
+self.*** -> 여기서 self는 instance를 나타냄 
+
+owner의 auth.User 를 그냥 User를 사용하는 것도 가능 
+from django.contib.auth.models import Users 를 해주면 User로도 가능한데 import 가 여러번 있는 경우 import오류가 뜨게 됨
+
+성일)
+put 은 수정할 때 전부 값 지정 안되어 있을 때 지정하지 않은 값은 null 이거나 초기 값 -> put 해보니 상황에 따라 다른듯..?
+url 뒤에 슬래시 가져오는 것 -> 튜토리얼을 진행하다 보니 나중에 슬래시를 false로 만들어주던데 미리 만들어 주는게 낫지 않나?
+
+경준)
+apiview는 print 칠 수 있는데 -> 자유도가 높은 편 
+genericview는 print를 칠 수 없다 -> 자유도가 좀 낮다 
+generic 하고 mixin을 같이 쓰는데 mixin 을 커스터마이즈를 하게 되면 조금 더 자유도가 높게 쓸 수 있지 않을까 
+
+주은) 
+reverse relationship?
+User 가 Snippet보다 더 우위에 있다고 생각하면 됨. Snippet에 2번 user와 3번 user가 있다고 생각하고 만약 이 때 user를 삭제 한다 하면 snippet에는 영향을 끼치지만 ( snippet삭제 하시겠습니까?) snippet을 삭제하게 되면 user에는 영향이 없다.
+
+상은) 
+  queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+
+url parameter
+
+
+posts= post.objects.all() -> queryset 에서 
+post ={  이안에 id랑 description등 정의해주는 부분 } -> serializer로 
+JSONResponse-> response로 
+keyword argument -> dictionary 처리
+list -> argument 
+list는 어떻게 넣어주어야 하고? args 어떨 때 쓰이는 걸까 -> 모든 자료형을 사용하기 위해 
+argument를 쓰면 파라미터 갯수에 상관없이 받아짐/ 유연하게 짜려고 하는게 아닐까?
+3강에서
+   def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+이게 pk와 format으로 받는거 아니야?
+
+승준)
+<int:pk> 가 뭔가 다 드러나는 느낌인데 보안을 해서 숨기고 싶을 땐 필드를 하나 더 만들어서 난수로 만들어서 사용해도 좋음!
+
+cookie??
+HTTP의 일종으로서 인터넷 사용자가 어떤 웹사이트 방문 시에 그 사이트가 사용하고 있는 서버 통해 인터넷 사용자의 컴퓨터에 설치되는 작은 정보 파일
+이 안에 있는 정보는 유저가 같은 웹사이트 사용할 때마다 수시로 읽히고 바뀜.
+웹브라우저 안에 저장되는 공간이 있음. 내서버랑 통신을 할때마다 쿠키를 같이. 클라이언트를 식별할 때 쿠키 사용
+세션은 서버단에서 그런거고 쿠키는 브라우저단임
+쿠키와 세션 차이점 : https://jeong-pro.tistory.com/80
+
+Middleware? request response 보낼때 돌아가는 부분 / 
+모든 request 함수가 들어올때마다 모든 걸 찍어야 하느데 그럴 때 사용 
+permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+ 
+Snippetlist에 def post에서 print(request.ㅕser) 를 쓰게 되면 middleware가 돌아감으로써 이 명령문에 id와 password가 합쳐져 있는 value를 넣어줘서 그것을 사용 가능하게 도와줌 
+
+수민)
+SnippetDetail에서
+queryset = Snippet.objects.all() 은 pk값 하나 넘겨주면 되는 거 아닌가 왜 굳이 all을 넣어야 하는건지 ??
+GenericAPIView 를 봐보면,,  queryset에서 필터 쿼리셋을 써서 get object함수를 사용. 결국은 queryset을 써야 필터를 해서 get object를 사용할 수 있음.  
+--> 무슨 말이지? detailview는결국 retrieve를 하는것 -> 인스턴스 가져ㅘ야함 -> get object 함수 사용 -> genericapiview를 보면 get queryset이란 거에서 queryset을 다 가져와서 그 중에서 get object 를 사용하는 것 
+결국 get object를 하기 위해 queryset이 필요한 것 
+
+하나의 함수를 여러부분에서 사용해야 되니까 list에서 쓰려면 다 가져와야 되고 detail에서는 하나 만 가져 올 수 있다? 같은 애를 두번 사용하는거니까 범위가 더 넓은 애로 사용
+
+
+ 
