@@ -128,13 +128,15 @@ class SnippetDetail(APIView):
 
 
 from rest_framework import generics
+from rest_framework import viewsets
+from .serializers import *
 
 #아래는 generic class view로 자주 쓰이는 기능만 간단하게 구현 가능
 #편함
 #Mixin은 뒤에서 해줌 (generics 들어가 보면 암)
 class SnippetList_generic(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    serializer_class = HyperSnippetSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
 
     def perform_create(self, serializer):
@@ -143,7 +145,7 @@ class SnippetList_generic(generics.ListCreateAPIView):
 
 class SnippetDetail_generic(generics.RetrieveUpdateDestroyAPIView):
     queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    serializer_class = HyperSnippetSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
 
 
@@ -152,9 +154,60 @@ from django.contrib.auth.models import User
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
-
+    serializer_class = HyperUserSerializer
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
+    serializer_class = HyperUserSerializer
+
+
+from rest_framework import viewsets
+
+class ModelViewUserViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset automatically provides `list` and `detail` actions.
+    """
+    queryset = User.objects.all()
     serializer_class = UserSerializer
+
+from rest_framework.decorators import action
+from rest_framework import renderers
+
+class ModelViewSnippetViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    Additionally we also provide an extra `highlight` action.
+    """
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+
+    @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
+    def highlight(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+from rest_framework.reverse import reverse
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'snippets': reverse('snippet-list', request=request, format=format)
+    })
+
+
+class SnippetHighlight(generics.GenericAPIView):
+    queryset = Snippet.objects.all()
+    renderer_classes = (renderers.StaticHTMLRenderer,)
+
+    def get(self, request, *args, **kwargs):
+        #pk in kwargs
+        snippet = self.get_object()
+        return Response(snippet.highlighted)
