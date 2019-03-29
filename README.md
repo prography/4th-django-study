@@ -23,3 +23,8 @@
 2. generic class view를 사용하면 일반적인 기능을 매우 쉽게 구현할 수 있다.
 3. class view 에 permission_classes를 정의함으로서 user authentication 또는 object authentication을 할 수 있다.
 
+#3주차
+
+[핵심내용]
+
+1. 하이퍼링크 필드 이용가능
