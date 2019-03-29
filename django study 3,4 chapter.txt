@@ -1,0 +1,67 @@
+����)
+class Snippet�� owner �� ���� foreignkey�� related _ key �� snippets �� ��� . �̷� ����ȭ �ν��Ͻ� ��뵵 �����Ѵٴ� ��
+self.*** -> ��..�⼭ self�� instance�� ��Ÿ�� 
+
+owner�� auth.User �� �׳� User�� ����ϴ� �͵� ���� 
+from django.contib.auth.models import Users �� ���ָ� User�ε� �����ѵ� import �� ������ �ִ� ��� import������ �߰� ��
+
+����)
+put �� ������ �� ���� �� ���� �ȵǾ� ���� �� �������� ���� ���� null �̰ų� �ʱ� �� -> put �غ��� ��Ȳ�� ���� �ٸ���..?
+url �ڿ� ������ �������� �� -> Ʃ�丮���� �����ϴ� ���� ���߿� �����ø� false�� ������ִ��� �̸� ����� �ִ°� ���� �ʳ�?
+
+����)
+apiview�� print ĥ �� �ִµ� -> �������� ���� �� 
+genericview�� print�� ĥ �� ���� -> �������� �� ���� 
+generic �ϰ� mixin�� ���� ���µ� mixin �� Ŀ���͸���� �ϰ� �Ǹ� ���� �� �������� ��� �� �� ���� ������ 
+
+����) 
+reverse relationship?
+User �� Snippet���� �� ������ �ִٰ� �����ϸ� ��. Snippet�� 2�� user�� 3�� user�� �ִٰ� �����ϰ� ���� �� �� user�� ���� �Ѵ� �ϸ� snippet���� ������ ��ġ���� ( snippet���� �Ͻðڽ��ϱ�?) snippet�� �����ϰ� �Ǹ� user���� ������ ����.
+
+����) 
+  queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+
+url parameter
+
+
+posts= post.objects.all() -> queryset ���� 
+post ={  �̾ȿ� id�� description�� �������ִ� �κ� } -> serializer�� 
+JSONResponse-> response�� 
+keyword argument -> dictionary ó��
+list -> argument 
+list�� ��� �־��־�� �ϰ�? args � �� ���̴� �ɱ� -> ��� �ڷ����� ����ϱ� ���� 
+argument�� ���� �Ķ���� ������ ������� �޾���/ �����ϰ� ¥���� �ϴ°� �ƴұ�?
+3������
+   def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+�̰� pk�� format���� �޴°� �ƴϾ�?
+
+����)
+<int:pk> �� ���� �� �巯���� �����ε� ������ �ؼ� ����� ���� �� �ʵ带 �ϳ� �� ���� ������ ���� ����ص� ����!
+
+cookie??
+HTTP�� �������μ� ���ͳ� ����ڰ� � ������Ʈ �湮 �ÿ� �� ����Ʈ�� ����ϰ� �ִ� ���� ���� ���ͳ� ������� ��ǻ�Ϳ� ��ġ�Ǵ� ���� ���� ����
+�� �ȿ� �ִ� ������ ������ ���� ������Ʈ ����� ������ ���÷� ������ �ٲ�.
+�������� �ȿ� ����Ǵ� ������ ����. �������� ����� �Ҷ����� ��Ű�� ����. Ŭ���̾�Ʈ�� �ĺ��� �� ��Ű ���
+������ �����ܿ��� �׷��Ű� ��Ű�� ����������
+��Ű�� ���� ������ : https://jeong-pro.tistory.com/80
+
+Middleware? request response ������ ���ư��� �κ� / 
+��� request �Լ��� ���ö����� ��� �� ���� �ϴ��� �׷� �� ��� 
+permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+ 
+Snippetlist�� def post���� print(request.��ser) �� ���� �Ǹ� middleware�� ���ư����ν� �� ��ɹ��� id�� password�� ������ �ִ� value�� �־��༭ �װ��� ��� �����ϰ� ������ 
+
+����)
+SnippetDetail����
+queryset = Snippet.objects.all() �� pk�� �ϳ� �Ѱ��ָ� �Ǵ� �� �ƴѰ� �� ���� all�� �־�� �ϴ°��� ??
+GenericAPIView �� ������,,  queryset���� ���� �������� �Ἥ get object�Լ��� ���. �ᱹ�� queryset�� ��� ���͸� �ؼ� get object�� ����� �� ����.  
+--> ���� ������? detailview�°ᱹ retrieve�� �ϴ°� -> �ν��Ͻ� �����Ⱦ��� -> get object �Լ� ��� -> genericapiview�� ���� get queryset�̶� �ſ��� queryset�� �� �����ͼ� �� �߿��� get object �� ����ϴ� �� 
+�ᱹ get object�� �ϱ� ���� queryset�� �ʿ��� �� 
+
+�ϳ��� �Լ��� �����κп��� ����ؾ� �Ǵϱ� list���� ������ �� �����;� �ǰ� detail������ �ϳ� �� ���� �� �� �ִ�? ���� �ָ� �ι� ����ϴ°Ŵϱ� ������ �� ���� �ַ� ���
+
+
+ 
