@@ -21,11 +21,10 @@ DRF의 리스폰스는 올바른 내용을 선택해서 리턴해줌
 urlpatterns = format_suffix_patterns(urlpatterns) 
 이거쓰면 데이터 어떤형식으로 해줄지 접미사를 이용해 보다 쉽게 사용 할수있음
 
-/////////////////////////////////////////////넘졸려서 내일 
 -3Class-based Views
 제네릭 클래스 기반 뷰 가 매우 편하드아 
 
 -4 Authentication & Permissions
 인증된 사용자만 API를 이용 할 수 있게한다.
 permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-SessionAuthentication및 BasicAuthentication. API 인증 
+기본적으로 SessionAuthentication및 BasicAuthentication. API 인증 
