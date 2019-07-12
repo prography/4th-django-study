@@ -1,0 +1,17 @@
+# 가상환경
+venv
+
+# secretkey같은 내용 감추기
+.config_secret
+
+# IntelliJ라는 IDE에서 사용하는 option 값 저장하는 폴더(여러 각종 버전 프로젝트 고유 설정)
+.idea/
+
+# mac OS에서 파인더 앱에 접근하는 모든 디렉토리에 생성되는 파일이다.
+.DS_Store
+
+# 프로그램시작(load)시간을 줄이기 위해 파이썬은 바이트로 컴파일된 pyc 파일을 먼저 본다. 즉 각 py파일마다 하나씩 pyc파일을 가짐.
+*.pyc
+
+#카카오로그인 하면서 만든 html파일
+order/templates/order/kakao.html
